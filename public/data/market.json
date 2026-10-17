@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "generated_at": null,
+  "timezone": "Asia/Tokyo",
+  "fx": {"usd_jpy": null, "as_of": null, "status": "unavailable"},
+  "assets": [],
+  "note": "Initial placeholder. Trigger the GitHub Actions workflow once to load real market data."
+}

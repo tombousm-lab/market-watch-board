@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#09141c">
+  <meta name="description" content="日本株、米国株、投資信託、S&P 500、金の価格をまとめて確認する個人向けウォッチリスト。">
+  <title>Market Desk — My Watchlist</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <div class="brand" aria-label="Market Desk">
+        <span class="brand-icon" aria-hidden="true"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M2 17l6-6 4 4 9-10"/><path d="M15 5h6v6"/></svg></span>
+        <span>market<span class="brand-accent">desk.</span></span>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-caption">PERSONAL WATCHLIST</span>
+        <span class="topbar-divider" aria-hidden="true"></span>
+        <span id="jstClock" class="clock" aria-label="日本時間"></span>
+        <button id="reloadBtn" class="icon-button" type="button" title="GitHub Pages上の最新スナップショットを再読込（株価の即時取得ではありません）" aria-label="表示データを再読み込み">
+          <svg viewBox="0 0 24 24" width="19" height="19" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.2 5.55"/><path d="M20 4v7h-7"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="heroTitle">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-line"></span> YOUR MARKET OVERVIEW</div>
+          <h1 id="heroTitle">見たい市場を、<br><span>ひとつの場所に。</span></h1>
+          <p>気になる12銘柄の値動きをまとめてチェック。国内株式から米国株式、投資信託、金まで。</p>
+          <div class="hero-status" aria-live="polite"><span id="statusDot" class="status-dot"></span><span id="updateStatus">更新状況を確認しています…</span></div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg viewBox="0 0 480 248" preserveAspectRatio="xMidYMid meet" class="art-svg">
+            <defs><linearGradient id="waveGlow" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#61e3c1" stop-opacity=".1"/><stop offset="100%" stop-color="#61e3c1" stop-opacity=".45"/></linearGradient><linearGradient id="areaGlow" x1="0" x2="0" y1="0" y2="1"><stop offset="0%" stop-color="#60e3c1" stop-opacity=".16"/><stop offset="100%" stop-color="#60e3c1" stop-opacity="0"/></linearGradient></defs>
+            <path d="M8 40H470M8 87H470M8 134H470M8 181H470M8 228H470" stroke="#254351" stroke-opacity=".52" stroke-width="1" stroke-dasharray="3 6"/>
+            <path d="M27 193 61 176 94 188 128 143 161 156 195 118 229 131 262 90 296 112 330 73 364 84 398 37 442 49 465 17V239H27Z" fill="url(#areaGlow)"/>
+            <path d="M27 193 61 176 94 188 128 143 161 156 195 118 229 131 262 90 296 112 330 73 364 84 398 37 442 49 465 17" stroke="url(#waveGlow)" stroke-width="3.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="398" cy="37" r="5" fill="#66e3c3"/><circle cx="398" cy="37" r="13" fill="#66e3c3" fill-opacity=".10"/>
+          </svg>
+          <div class="art-overlay"><span class="art-label">MARKET SIGNAL</span><span class="art-indicator">● <span>TRACKING 12 ASSETS</span></span></div>
+        </div>
+      </section>
+
+      <section class="metrics" aria-label="ウォッチリスト概要">
+        <div class="metric"><span class="metric-icon mint">◎</span><span class="metric-label">WATCHING</span><div class="metric-main"><strong id="totalMetric">12</strong><span>銘柄</span></div><span class="metric-foot">4つの資産カテゴリー + 指数</span></div>
+        <div class="metric"><span class="metric-icon positive">↗</span><span class="metric-label">UP</span><div class="metric-main"><strong id="upMetric">—</strong><span>銘柄</span></div><span class="metric-foot">前取引日比プラス</span></div>
+        <div class="metric"><span class="metric-icon negative">↘</span><span class="metric-label">DOWN</span><div class="metric-main"><strong id="downMetric">—</strong><span>銘柄</span></div><span class="metric-foot">前取引日比マイナス</span></div>
+        <div class="metric fx-metric"><span class="metric-icon gold">$</span><span class="metric-label">USD / JPY</span><div class="metric-main"><strong id="fxMetric">—</strong><span>円</span></div><span id="fxDate" class="metric-foot">為替データの取得待ち</span></div>
+      </section>
+
+      <section class="content-block" aria-labelledby="watchlistTitle">
+        <div class="section-head">
+          <div><span class="section-kicker">THE WATCHLIST</span><h2 id="watchlistTitle">ウォッチリスト <span id="visibleCount">12</span></h2></div>
+          <label class="search-field"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="searchInput" type="search" placeholder="銘柄名・コードで検索" autocomplete="off" aria-label="銘柄名・コードで検索"></label>
+        </div>
+        <div class="filters" aria-label="表示カテゴリ">
+          <div class="filter-options" id="filters">
+            <button class="filter active" type="button" data-group="all" aria-pressed="true">すべて</button>
+            <button class="filter" type="button" data-group="jp" aria-pressed="false">日本株</button>
+            <button class="filter" type="button" data-group="us" aria-pressed="false">米国株</button>
+            <button class="filter" type="button" data-group="index" aria-pressed="false">指数</button>
+            <button class="filter" type="button" data-group="fund" aria-pressed="false">投資信託</button>
+            <button class="filter" type="button" data-group="metal" aria-pressed="false">金</button>
+          </div>
+          <div class="filter-tools">
+            <button id="favoriteFilter" class="text-control" type="button" aria-pressed="false"><span class="star-char">☆</span> お気に入り</button>
+            <span class="tools-separator"></span>
+            <select id="sortSelect" aria-label="並び替え" class="sort-select"><option value="default">登録順</option><option value="change_desc">騰落率が高い順</option><option value="change_asc">騰落率が低い順</option><option value="name">名前順</option></select>
+          </div>
+        </div>
+        <div class="table-card">
+          <div class="table-header" aria-hidden="true"><span>銘柄 / SYMBOL</span><span>PRICE</span><span>CHANGE</span><span>30D TREND</span><span>AS OF</span><span></span></div>
+          <div id="assetList" class="asset-list" aria-live="polite"></div>
+          <div id="emptyState" class="empty-state" hidden><div class="empty-icon">⌕</div><strong>該当する銘柄がありません</strong><span>検索条件やカテゴリを変更してください。</span></div>
+        </div>
+        <div class="after-table"><span>価格は自動取得された最新スナップショット（リアルタイム配信ではありません）。</span><label class="yen-toggle"><input id="yenToggle" type="checkbox"><span>米国株の円換算を併記</span></label></div>
+      </section>
+
+      <section class="info-grid" aria-label="データに関する補足">
+        <article class="info-box"><div class="info-head"><span class="info-number">01 / </span><h3>更新について</h3></div><p>GitHub Actionsが原則として<strong>日本時間の毎時23分（1日24回）</strong>にデータを取得し、サイトを再公開します。休日は前営業日の価格が表示され、ジョブ実行は遅れる場合があります。</p></article>
+        <article class="info-box"><div class="info-head"><span class="info-number">02 / </span><h3>価格の定義</h3></div><p>投資信託は <strong>1万口あたりの基準価額</strong>（分配金を含まない値）、金は米ドル建て金先物を円／gへ換算した<strong>参考価格</strong>です。店頭購入価格や現物スポット価格ではありません。</p></article>
+        <article class="info-box"><div class="info-head"><span class="info-number">03 / </span><h3>データ出典</h3></div><p>株式・指数・金・為替はYahoo Finance系のデータ、投資信託は運用会社の公開基準価額資料等を利用します。利用条件は各提供元に従ってください。商用利用や再配信には別途許諾が必要になる場合があります。</p></article>
+      </section>
+    </main>
+    <footer class="footer"><span>© MARKET DESK <span class="footer-faint">/ A PERSONAL LEARNING PROJECT</span></span><span>参考情報です。投資助言ではありません。</span></footer>
+  </div>
+
+  <dialog id="detailDialog" class="detail-dialog" aria-labelledby="dialogName">
+    <div class="dialog-wrap">
+      <div class="dialog-top"><span>ASSET DETAIL <span class="dialog-tiny">/ PRICE HISTORY</span></span><button id="closeDialog" type="button" class="icon-button" aria-label="詳細を閉じる">×</button></div>
+      <div class="dialog-name"><div><span id="dialogGroup" class="tag"></span><h2 id="dialogName"></h2><p id="dialogTicker"></p></div><a id="dialogSource" target="_blank" rel="noopener noreferrer">価格の出典 ↗</a></div>
+      <div class="dialog-quote"><div><span class="dialog-price-label">LAST REPORTED PRICE</span><div id="dialogPrice" class="dialog-price"></div></div><div id="dialogChange" class="dialog-change"></div></div>
+      <div class="chart-toolbar"><strong>PRICE HISTORY</strong><div class="range-group"><button type="button" data-range="30">1M</button><button type="button" data-range="90" class="chosen">3M</button><button type="button" data-range="180">6M</button><button type="button" data-range="365">1Y</button></div></div>
+      <div id="largeChart" class="large-chart"></div>
+      <div class="chart-bottom"><span id="chartRangeText"></span><span id="dialogAsOf"></span></div>
+      <div class="dialog-note" id="dialogNote"></div>
+    </div>
+  </dialog>
+</body>
+</html>
