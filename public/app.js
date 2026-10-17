@@ -14,6 +14,7 @@
     {id:'genomics', short:'10x Genomics', name:'10x Genomics', symbol:'TXG', group:'us', unit:'USD', mark:'10x'},
     {id:'sp500', short:'S&P 500', name:'S&P 500 Index', symbol:'^GSPC', group:'index', unit:'PTS', mark:'S&P'},
     {id:'allcountry', short:'オルカン', name:'eMAXIS Slim 全世界株式（オール・カントリー）', symbol:'0331418A', group:'fund', unit:'JPY_10000', mark:'全'},
+    {id:'emaxis_sp500', short:'eMAXIS Slim S&P500', name:'eMAXIS Slim 米国株式（S&P500）', symbol:'03311187', group:'fund', unit:'JPY_10000', mark:'500'},
     {id:'sbi_div', short:'SBI 全世界高配当', name:'SBI 全世界高配当株式ファンド（年4回決算型）', symbol:'8931124A', group:'fund', unit:'JPY_10000', mark:'SBI'},
     {id:'gold', short:'Gold（1g）', name:'Gold / 金先物換算', symbol:'GC=F × JPY=X', group:'metal', unit:'JPY_GRAM', mark:'Au'}
   ];
@@ -22,15 +23,143 @@
     komatsu:'https://finance.yahoo.co.jp/quote/6301.T', shinetsu:'https://finance.yahoo.co.jp/quote/4063.T', ajinomoto:'https://finance.yahoo.co.jp/quote/2802.T',
     berkshire:'https://finance.yahoo.com/quote/BRK-B', tsmc:'https://finance.yahoo.com/quote/TSM', alphabet:'https://finance.yahoo.com/quote/GOOGL',
     autodesk:'https://finance.yahoo.com/quote/ADSK', genomics:'https://finance.yahoo.com/quote/TXG',sp500:'https://finance.yahoo.com/quote/%5EGSPC',
-    allcountry:'https://www.am.mufg.jp/fund/253425.html', sbi_div:'https://apl.wealthadvisor.jp/webasp/sbi_am/pc/basic/sa_2024100101.html',
+    allcountry:'https://www.am.mufg.jp/fund/253425.html', emaxis_sp500:'https://emaxis.am.mufg.jp/fund/253266.html', sbi_div:'https://apl.wealthadvisor.jp/webasp/sbi_am/pc/basic/sa_2024100101.html',
     gold:'https://finance.yahoo.com/quote/GC%3DF/'
   };
   const $ = id => document.getElementById(id);
   const state = {
     data: null, loadError:false, assets: [], filter:'all', search:'', favorites:readFavorites(), favoritesOnly:false,
-    yen:false, sort:'default', current:null, range:90
+    yen:false, sort:'default', current:null, range:365, holdings:readHoldings()
   };
   function readFavorites() { try { const a = JSON.parse(localStorage.getItem('marketdesk-favorites') || '[]'); return new Set(Array.isArray(a) ? a : []); } catch { return new Set(); } }
+  const HOLDINGS_KEY='marketdesk-holdings-v2';
+  function cleanHoldings(obj) {
+    const out={};
+    if(!obj || typeof obj!=='object' || Array.isArray(obj)) return out;
+    for(const a of CATALOG) {
+      if(a.group==='index') continue; // S&P500 is an index, not a purchasable instrument.
+      const record=obj[a.id];
+      if(!record || typeof record!=='object' || Array.isArray(record)) continue;
+      const qty=Number(record.quantity);
+      const cost=record.costJPY==='' || record.costJPY==null ? null : Number(record.costJPY);
+      if(!Number.isFinite(qty) || qty<0 || qty>1e12) continue;
+      if(qty>0) out[a.id]={quantity:qty, costJPY:Number.isFinite(cost)&&cost>=0&&cost<=1e15?cost:null};
+    }
+    return out;
+  }
+  function readHoldings(){
+    try {return cleanHoldings(JSON.parse(localStorage.getItem('marketdesk-holdings-v2')||'{}'));}
+    catch{return {};}
+  }
+  function persistHoldings(){
+    try {localStorage.setItem(HOLDINGS_KEY,JSON.stringify(state.holdings));return true;}
+    catch{return false;}
+  }
+  function quantityUnit(a){return a.group==='fund'?'口':a.group==='metal'?'g':'株';}
+  function quantityLabel(a){return a.group==='fund'?'口数':a.group==='metal'?'重量（g）':'株数';}
+  function getFx(){const n=state.data?.fx?.usd_jpy;return n===null || n===undefined || !Number.isFinite(Number(n)) || Number(n)<=0?null:Number(n);}
+  function holdingValueJPY(a,quantity){
+    if(a.group==='index' || !Number.isFinite(a.price) || quantity<=0)return null;
+    const fx=a.currency==='USD'?getFx():1;
+    if(fx===null)return null;
+    const m = a.currency === 'JPY_10000' ? 0.0001 : 1;
+    return a.price * quantity * m * fx;
+  }
+  function holdingOf(a){return state.holdings[a.id]||{quantity:0,costJPY:null};}
+  function jpy(n){return Number.isFinite(n)?'¥'+nf(Math.round(n),0):'—';}
+  function formattedQty(n){return nf(n, Number.isInteger(n)?0:Math.min(4,(String(n).split('.')[1]||'').length));}
+  function portfolioModel(){
+    const assets=state.assets.filter(a=>a.group!=='index' && holdingOf(a).quantity>0);
+    const valued=[];const missing=[];let total=0,profit=0,withCost=0;
+    const groups={};
+    for(const a of assets){
+      const h=holdingOf(a);const value=holdingValueJPY(a,h.quantity);
+      if(value===null){missing.push(a);continue;}
+      valued.push(a);total+=value;groups[a.group]=(groups[a.group]||0)+value;
+      if(Number.isFinite(h.costJPY)) {profit+=value-h.costJPY;withCost++;}
+    }
+    return {assets,valued,missing,total,profit,withCost,groups};
+  }
+  function renderPortfolio(){
+    const p=portfolioModel();
+    $('holdingsTotal').textContent=p.valued.length?jpy(p.total):p.assets.length?'—':'¥0';
+    $('holdingsCount').innerHTML=`${p.assets.length} <em>銘柄</em>`;
+    $('holdingsTotalNote').textContent=p.missing.length?`価格・為替未取得の${p.missing.length}銘柄は合計から除外`:
+      p.assets.length?'登録済み保有数量から自動計算':'数量を入力すると評価額を計算';
+    $('holdingsPnL').textContent=p.withCost?signed(Math.round(p.profit),0)+'円':'—';
+    $('holdingsPnL').className='change-'+direction(p.profit);
+    $('holdingsPnlNote').textContent=p.withCost?`取得額を登録した${p.withCost}銘柄のみで算出`:'取得額の入力は任意です';
+    const breakdown=$('portfolioBreakdown');
+    if(!p.assets.length){breakdown.innerHTML='<span>まだ数量が設定されていません。「保有数量を登録・編集」から登録できます。</span>';return;}
+    const entries=Object.entries(p.groups).sort((a,b)=>b[1]-a[1]);
+    const tones={jp:'#63dfb6',us:'#83b6ff',fund:'#b3a7f0',metal:'#e1bc81'};
+    const bars=entries.map(([key,value])=>`<div class="portfolio-segment" style="width:${(value/p.total*100).toFixed(3)}%;background:${tones[key]||'#b1d0d2'}" title="${safeText(GROUPS[key])}: ${jpy(value)}"></div>`).join('');
+    const caption=entries.map(([key,value])=>`<span class="portfolio-legend-item"><i style="background:${tones[key]||'#b1d0d2'}"></i>${GROUPS[key]} <b>${(value/p.total*100).toFixed(1)}%</b></span>`).join('');
+    breakdown.innerHTML=`<div class="breakdown-label">円換算の構成比（評価できた銘柄のみ）</div><div class="portfolio-bar">${bars||'<span class="bar-empty"></span>'}</div><div class="portfolio-legend">${caption}</div>${p.missing.length?`<p class="portfolio-warning">※ 未評価の${p.missing.length}銘柄：${p.missing.map(a=>safeText(a.short)).join('、')}</p>`:''}`;
+  }
+  function renderDetailHolding(){
+    const a=state.assets.find(x=>x.id===state.current);
+    if(!a)return;
+    const el=$('dialogHolding');
+    if(a.group==='index'){$('editFromDetail').hidden=true;el.textContent='S&P500は指数なので保有数量は登録できません。対応するeMAXIS Slim S&P500のほうに口数を入力してください。';return;}
+    $('editFromDetail').hidden=false;
+    const h=holdingOf(a);
+    if(!(h.quantity>0)){el.textContent='保有数量：未登録';return;}
+    const val=holdingValueJPY(a,h.quantity);
+    const profit=val!==null&&Number.isFinite(h.costJPY)?` / 評価損益 ${signed(Math.round(val-h.costJPY),0)}円`:'';
+    el.textContent=`保有：${formattedQty(h.quantity)} ${quantityUnit(a)} / 評価額 ${jpy(val)}${profit}`;
+  }
+  function renderHoldingEditor(){
+    $('holdingsSaveStatus').textContent='0 または空欄は未保有として扱います。';
+    $('holdingsEditorRows').innerHTML=CATALOG.filter(a=>a.group!=='index').map(a=>{
+      const h=holdingOf(a);const precision=a.group==='metal'?'0.01':'1';
+      return `<div class="holding-row" data-holding="${a.id}">
+        <div class="holding-editor-title"><strong>${safeText(a.short)}</strong><small>${safeText(a.symbol)} · ${GROUPS[a.group]}</small></div>
+        <label><span class="mobile-edit-label">${quantityLabel(a)} (${quantityUnit(a)})</span><div class="number-unit"><input class="holding-quantity" type="number" inputmode="decimal" min="0" max="1000000000000" step="${precision}" aria-label="${safeText(a.short)}の${quantityLabel(a)}" value="${h.quantity||''}" placeholder="0"><span>${quantityUnit(a)}</span></div></label>
+        <label><span class="mobile-edit-label">取得額合計（円）</span><div class="number-unit"><input class="holding-cost" type="number" inputmode="decimal" min="0" max="1000000000000000" step="1" aria-label="${safeText(a.short)}の取得額合計（円）" value="${Number.isFinite(h.costJPY)?h.costJPY:''}" placeholder="任意"><span>円</span></div></label>
+      </div>`;
+    }).join('');
+  }
+  function openHoldingsEditor(focusId=null){
+    renderHoldingEditor();
+    const dialog=$('holdingsDialog');if(!dialog.open)dialog.showModal();
+    if(focusId){const row=[...dialog.querySelectorAll('[data-holding]')].find(x=>x.dataset.holding===focusId);if(row){row.scrollIntoView({block:'nearest'});row.querySelector('.holding-quantity')?.focus();}}
+  }
+  function saveHoldingsEditor(){
+    const obj={};let invalid=null;
+    document.querySelectorAll('.holding-row').forEach(row=>{
+      const qtyRaw=row.querySelector('.holding-quantity').value.trim();
+      const costRaw=row.querySelector('.holding-cost').value.trim();
+      const quantity=qtyRaw===''?0:Number(qtyRaw);
+      const costJPY=costRaw===''?null:Number(costRaw);
+      if(!Number.isFinite(quantity)||quantity<0||quantity>1e12|| (costJPY!==null&&(!Number.isFinite(costJPY)||costJPY<0||costJPY>1e15))){invalid=row;return;}
+      if(quantity>0)obj[row.dataset.holding]={quantity,costJPY};
+    });
+    if(invalid){$('holdingsSaveStatus').textContent='数値を確認してください。数量・取得額は0以上で入力してください。';invalid.querySelector('input:invalid, input')?.focus();return;}
+    state.holdings=cleanHoldings(obj);
+    const ok=persistHoldings();
+    renderPortfolio();renderList();renderDetailHolding();
+    if(ok){$('holdingsDialog').close();}
+    else{$('holdingsSaveStatus').textContent='ブラウザの保存領域に書き込めません。設定を保存（JSON）でバックアップしてください。';}
+  }
+  function exportHoldings(){
+    const payload=JSON.stringify({format:'marketdesk-holdings',version:2,exported_at:new Date().toISOString(),holdings:state.holdings},null,2);
+    const blob=new Blob([payload],{type:'application/json'});const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='marketdesk-holdings.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+  }
+  async function importHoldings(file){
+    if(!file)return;
+    try{
+      if(file.size>256000)throw new Error('ファイルが大きすぎます。');
+      const x=JSON.parse(await file.text());
+      if(x?.format!=='marketdesk-holdings'||x?.version!==2||!x?.holdings||typeof x.holdings!=='object'||Array.isArray(x.holdings))throw new Error('Market Deskの設定JSONを選んでください。');
+      state.holdings=cleanHoldings(x.holdings);
+      if(!persistHoldings())throw new Error('保存領域に書き込めませんでした。');
+      renderPortfolio();renderList();renderDetailHolding();
+      alert(`保有数量を${Object.keys(state.holdings).length}銘柄分読み込みました。`);
+    }catch(err){alert('読み込みできませんでした: '+err.message);}
+  }
+
   function safeText(value) { return String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;', "'":'&#39;'}[c])); }
   function nf(n,d=0) { if (!Number.isFinite(n)) return '—'; return new Intl.NumberFormat('ja-JP',{minimumFractionDigits:d, maximumFractionDigits:d}).format(n); }
   function unit(code) { return ({JPY:'円', USD:'USD', PTS:'pt', JPY_10000:'円 / 1万口', JPY_GRAM:'円 / 1g'})[code] || code; }
@@ -84,7 +213,7 @@
       const rawPrice = val.price===null || val.price===undefined ? null : Number(val.price);
       const rawChange = val.change===null || val.change===undefined ? null : Number(val.change);
       const rawChangePct = val.change_pct===null || val.change_pct===undefined ? null : Number(val.change_pct);
-      return {...meta, price: Number.isFinite(rawPrice)?rawPrice:null, change:Number.isFinite(rawChange)?rawChange:null,
+      return {...meta, currency: val.currency || meta.unit, price: Number.isFinite(rawPrice)?rawPrice:null, change:Number.isFinite(rawChange)?rawChange:null,
         change_pct:Number.isFinite(rawChangePct)?rawChangePct:null,
         status:val.status||'unavailable', as_of:val.as_of||null, history:val.history||[],
         source_url:val.source_url||SOURCE[meta.id]};
@@ -126,8 +255,10 @@
       const percent=unknown?'未取得':signed(a.change_pct,2)+'%';
       const lastStatus=a.status==='cached'?'取得失敗・保存値':a.status==='unavailable'?'データ未取得':'前営業日終値等';
       const fav=state.favorites.has(a.id);
+      const h=holdingOf(a);const hasQty=h.quantity>0;
+      const owned=hasQty?`<span class="held-badge">保有 ${formattedQty(h.quantity)} ${quantityUnit(a)} · ${jpy(holdingValueJPY(a,h.quantity))}</span>`:'';
       return `<article class="asset-row" tabindex="0" role="button" data-id="${a.id}" data-group="${a.group}" aria-label="${safeText(a.name)}の価格履歴を見る">
-         <div class="asset-name"><span class="asset-mark">${safeText(a.mark)}</span><button class="star${fav?' saved':''}" type="button" aria-pressed="${fav}" aria-label="${safeText(a.short)}をお気に入り${fav?'から削除':'に登録'}" data-fav="${a.id}">${fav?'★':'☆'}</button><div class="name-lines"><span class="asset-title">${safeText(a.short)}</span><span class="asset-code">${safeText(a.symbol)} <i class="group-dot"></i> ${GROUPS[a.group]}</span></div></div>
+         <div class="asset-name"><span class="asset-mark">${safeText(a.mark)}</span><button class="star${fav?' saved':''}" type="button" aria-pressed="${fav}" aria-label="${safeText(a.short)}をお気に入り${fav?'から削除':'に登録'}" data-fav="${a.id}">${fav?'★':'☆'}</button><div class="name-lines"><span class="asset-title">${safeText(a.short)}</span><span class="asset-code">${safeText(a.symbol)} <i class="group-dot"></i> ${GROUPS[a.group]}</span>${owned}</div></div>
          <div class="asset-price"><strong>${displayPrice(a.price,a.currency)}</strong><small>${safeText(yenSubline(a))}</small></div>
          <div class="asset-change"><strong class="change-${d}">${changeValue}</strong><span>${percent}</span></div>
          <div class="asset-trend">${sparkline(a)}</div>
@@ -163,7 +294,7 @@
   function openDetail(id) {
     const a=state.assets.find(x=>x.id===id);
     if(!a)return;
-    state.current=id;state.range=90;
+    state.current=id;state.range=365;
     $('dialogGroup').textContent=GROUPS[a.group];
     $('dialogName').textContent=a.name;
     $('dialogTicker').textContent=a.symbol;
@@ -173,8 +304,9 @@
     const link=$('dialogSource');link.href=a.source_url||SOURCE[id];
     $('dialogAsOf').textContent='基準日 '+dateFull(a.as_of);
     $('dialogNote').textContent=a.status==='cached'?'今回の更新では価格が取得できなかったため、前回保存したデータを表示しています。':a.status==='unavailable'?'価格が未取得です。GitHub Actionsの実行結果を確認してください。':a.currency==='JPY_GRAM'?'金先物（USD/トロイオンス）× USD/JPY ÷ 31.1034768で計算した参考値です。国内地金の店頭販売・買取価格ではありません。':a.currency==='JPY_10000'?'基準価額（1万口あたり）です。分配金再投資を含まないため、分配日前後の値動きとトータルリターンは異なります。':'取引所の営業日に基づく日次価格です。表示時点のリアルタイム株価ではありません。';
-    document.querySelectorAll('.range-group button').forEach(b=>b.classList.toggle('chosen',Number(b.dataset.range)===90));
+    document.querySelectorAll('.range-group button').forEach(b=>b.classList.toggle('chosen',Number(b.dataset.range)===365));
     updateDetailChart();
+    renderDetailHolding();
     const dialog=$('detailDialog');
     if(!dialog.open)dialog.showModal();
   }
@@ -201,10 +333,18 @@
       state.data=null;state.loadError=true;state.assets=combineAssets(null);
       $('updateStatus').textContent='データの読み込みに失敗しました。通信と公開設定をご確認ください。';
     }
-    renderMetrics();renderList();btn.classList.remove('is-spinning');
+    renderMetrics();renderPortfolio();renderList();btn.classList.remove('is-spinning');
   }
   function bind() {
     $('reloadBtn').addEventListener('click',load);
+    $('editHoldingsBtn').addEventListener('click',()=>openHoldingsEditor());
+    $('exportHoldingsBtn').addEventListener('click',exportHoldings);
+    $('importHoldingsFile').addEventListener('change',async e=>{await importHoldings(e.target.files?.[0]);e.target.value='';});
+    $('closeHoldingsDialog').addEventListener('click',()=>$('holdingsDialog').close());
+    $('cancelHoldingsBtn').addEventListener('click',()=>$('holdingsDialog').close());
+    $('saveHoldingsBtn').addEventListener('click',saveHoldingsEditor);
+    $('holdingsDialog').addEventListener('click',e=>{if(e.target===$('holdingsDialog'))$('holdingsDialog').close();});
+    $('editFromDetail').addEventListener('click',()=>{const id=state.current;$('detailDialog').close();openHoldingsEditor(id);});
     $('searchInput').addEventListener('input',e=>{state.search=e.target.value;renderList();});
     $('filters').addEventListener('click',e=>{
       const btn=e.target.closest('button[data-group]');if(!btn)return;

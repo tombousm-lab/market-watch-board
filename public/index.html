@@ -7,8 +7,8 @@
   <meta name="description" content="日本株、米国株、投資信託、S&P 500、金の価格をまとめて確認する個人向けウォッチリスト。">
   <title>Market Desk — My Watchlist</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="stylesheet" href="./style.css">
-  <script src="./app.js" defer></script>
+  <link rel="stylesheet" href="./style.css?v=2">
+  <script src="./app.js?v=2" defer></script>
 </head>
 <body>
   <div class="site-shell">
@@ -32,7 +32,7 @@
         <div class="hero-copy">
           <div class="eyebrow"><span class="eyebrow-line"></span> YOUR MARKET OVERVIEW</div>
           <h1 id="heroTitle">見たい市場を、<br><span>ひとつの場所に。</span></h1>
-          <p>気になる12銘柄の値動きをまとめてチェック。国内株式から米国株式、投資信託、金まで。</p>
+          <p>気になる13銘柄の値動きをまとめてチェック。国内株式から米国株式、投資信託、金まで。</p>
           <div class="hero-status" aria-live="polite"><span id="statusDot" class="status-dot"></span><span id="updateStatus">更新状況を確認しています…</span></div>
         </div>
         <div class="hero-art" aria-hidden="true">
@@ -43,20 +43,38 @@
             <path d="M27 193 61 176 94 188 128 143 161 156 195 118 229 131 262 90 296 112 330 73 364 84 398 37 442 49 465 17" stroke="url(#waveGlow)" stroke-width="3.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
             <circle cx="398" cy="37" r="5" fill="#66e3c3"/><circle cx="398" cy="37" r="13" fill="#66e3c3" fill-opacity=".10"/>
           </svg>
-          <div class="art-overlay"><span class="art-label">MARKET SIGNAL</span><span class="art-indicator">● <span>TRACKING 12 ASSETS</span></span></div>
+          <div class="art-overlay"><span class="art-label">MARKET SIGNAL</span><span class="art-indicator">● <span>TRACKING 13 ASSETS</span></span></div>
         </div>
       </section>
 
       <section class="metrics" aria-label="ウォッチリスト概要">
-        <div class="metric"><span class="metric-icon mint">◎</span><span class="metric-label">WATCHING</span><div class="metric-main"><strong id="totalMetric">12</strong><span>銘柄</span></div><span class="metric-foot">4つの資産カテゴリー + 指数</span></div>
+        <div class="metric"><span class="metric-icon mint">◎</span><span class="metric-label">WATCHING</span><div class="metric-main"><strong id="totalMetric">13</strong><span>銘柄</span></div><span class="metric-foot">4つの資産カテゴリー + 指数</span></div>
         <div class="metric"><span class="metric-icon positive">↗</span><span class="metric-label">UP</span><div class="metric-main"><strong id="upMetric">—</strong><span>銘柄</span></div><span class="metric-foot">前取引日比プラス</span></div>
         <div class="metric"><span class="metric-icon negative">↘</span><span class="metric-label">DOWN</span><div class="metric-main"><strong id="downMetric">—</strong><span>銘柄</span></div><span class="metric-foot">前取引日比マイナス</span></div>
         <div class="metric fx-metric"><span class="metric-icon gold">$</span><span class="metric-label">USD / JPY</span><div class="metric-main"><strong id="fxMetric">—</strong><span>円</span></div><span id="fxDate" class="metric-foot">為替データの取得待ち</span></div>
       </section>
 
+      <section class="portfolio" id="portfolioSection" aria-labelledby="portfolioTitle">
+        <div class="portfolio-head">
+          <div><span class="section-kicker">MY PORTFOLIO</span><h2 id="portfolioTitle">保有資産の簡易計算</h2><p>保有株数・投資信託の口数を登録すると、最新の取得価格で円換算の参考評価額を計算します。</p></div>
+          <div class="portfolio-actions">
+            <button class="primary-button" id="editHoldingsBtn" type="button">＋ 保有数量を登録・編集</button>
+            <button class="outline-button" id="exportHoldingsBtn" type="button" title="保存済みの保有数量と取得額をJSON形式でバックアップ">設定を保存（JSON）</button>
+            <label class="outline-button import-button" for="importHoldingsFile" title="以前保存したJSONファイルから設定を復元">JSONを読み込む<input id="importHoldingsFile" type="file" accept=".json,application/json" hidden></label>
+          </div>
+        </div>
+        <div class="portfolio-stats">
+          <div class="portfolio-stat emphasis"><span>保有評価額（円換算）</span><strong id="holdingsTotal">¥0</strong><small id="holdingsTotalNote">登録すると自動で計算</small></div>
+          <div class="portfolio-stat"><span>登録した保有銘柄</span><strong id="holdingsCount">0 <em>銘柄</em></strong><small>指数は保有数量の対象外</small></div>
+          <div class="portfolio-stat"><span>取得額登録分の評価損益</span><strong id="holdingsPnL">—</strong><small id="holdingsPnlNote">取得額の入力は任意です</small></div>
+        </div>
+        <div id="portfolioBreakdown" class="portfolio-breakdown" aria-live="polite"><span>まだ数量が設定されていません。上のボタンから登録できます。</span></div>
+        <p class="portfolio-disclaimer">数量・取得額はこのブラウザ内にのみ保存され、GitHubには送信されません。別端末には自動同期されません。損益は税金・手数料・配当等を含まない概算です。</p>
+      </section>
+
       <section class="content-block" aria-labelledby="watchlistTitle">
         <div class="section-head">
-          <div><span class="section-kicker">THE WATCHLIST</span><h2 id="watchlistTitle">ウォッチリスト <span id="visibleCount">12</span></h2></div>
+          <div><span class="section-kicker">THE WATCHLIST</span><h2 id="watchlistTitle">ウォッチリスト <span id="visibleCount">13</span></h2></div>
           <label class="search-field"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="searchInput" type="search" placeholder="銘柄名・コードで検索" autocomplete="off" aria-label="銘柄名・コードで検索"></label>
         </div>
         <div class="filters" aria-label="表示カテゴリ">
@@ -84,7 +102,7 @@
 
       <section class="info-grid" aria-label="データに関する補足">
         <article class="info-box"><div class="info-head"><span class="info-number">01 / </span><h3>更新について</h3></div><p>GitHub Actionsが原則として<strong>日本時間の毎時23分（1日24回）</strong>にデータを取得し、サイトを再公開します。休日は前営業日の価格が表示され、ジョブ実行は遅れる場合があります。</p></article>
-        <article class="info-box"><div class="info-head"><span class="info-number">02 / </span><h3>価格の定義</h3></div><p>投資信託は <strong>1万口あたりの基準価額</strong>（分配金を含まない値）、金は米ドル建て金先物を円／gへ換算した<strong>参考価格</strong>です。店頭購入価格や現物スポット価格ではありません。</p></article>
+        <article class="info-box"><div class="info-head"><span class="info-number">02 / </span><h3>価格と評価額の定義</h3></div><p>投資信託は <strong>1万口あたりの基準価額</strong>（分配金を含まない値）、金は米ドル建て金先物を円／gへ換算した<strong>参考価格</strong>です。店頭購入価格や現物スポット価格ではありません。米国株は最新取得為替で円換算し、投資信託の数量は<strong>口数</strong>で入力します。</p></article>
         <article class="info-box"><div class="info-head"><span class="info-number">03 / </span><h3>データ出典</h3></div><p>株式・指数・金・為替はYahoo Finance系のデータ、投資信託は運用会社の公開基準価額資料等を利用します。利用条件は各提供元に従ってください。商用利用や再配信には別途許諾が必要になる場合があります。</p></article>
       </section>
     </main>
@@ -96,10 +114,23 @@
       <div class="dialog-top"><span>ASSET DETAIL <span class="dialog-tiny">/ PRICE HISTORY</span></span><button id="closeDialog" type="button" class="icon-button" aria-label="詳細を閉じる">×</button></div>
       <div class="dialog-name"><div><span id="dialogGroup" class="tag"></span><h2 id="dialogName"></h2><p id="dialogTicker"></p></div><a id="dialogSource" target="_blank" rel="noopener noreferrer">価格の出典 ↗</a></div>
       <div class="dialog-quote"><div><span class="dialog-price-label">LAST REPORTED PRICE</span><div id="dialogPrice" class="dialog-price"></div></div><div id="dialogChange" class="dialog-change"></div></div>
-      <div class="chart-toolbar"><strong>PRICE HISTORY</strong><div class="range-group"><button type="button" data-range="30">1M</button><button type="button" data-range="90" class="chosen">3M</button><button type="button" data-range="180">6M</button><button type="button" data-range="365">1Y</button></div></div>
+      <div class="chart-toolbar"><strong>PRICE HISTORY</strong><div class="range-group"><button type="button" data-range="30">1M</button><button type="button" data-range="90">3M</button><button type="button" data-range="180">6M</button><button type="button" data-range="365" class="chosen">1Y</button></div></div>
       <div id="largeChart" class="large-chart"></div>
       <div class="chart-bottom"><span id="chartRangeText"></span><span id="dialogAsOf"></span></div>
+      <div class="detail-holding" id="dialogHolding" aria-live="polite"></div>
+      <div class="dialog-holdaction"><button type="button" id="editFromDetail" class="outline-button">この銘柄の保有数量を登録・編集 →</button></div>
       <div class="dialog-note" id="dialogNote"></div>
+    </div>
+  </dialog>
+
+  <dialog id="holdingsDialog" class="holdings-dialog" aria-labelledby="holdingsDialogTitle">
+    <div class="holdings-dialog-wrap">
+      <div class="dialog-top"><span>EDIT HOLDINGS <span class="dialog-tiny">/ 保存はこの端末のみ</span></span><button id="closeHoldingsDialog" type="button" class="icon-button" aria-label="保有数量の編集を閉じる">×</button></div>
+      <h2 id="holdingsDialogTitle">保有株数・口数を設定</h2>
+      <p class="editor-help">各銘柄の<strong>保有数</strong>を入力してください。任意の「取得額（円）」は、その銘柄を取得するために実際に支払った<strong>合計金額</strong>です。ドルで購入した場合も支払時の円換算合計を入力すれば、為替変動も含めた参考損益になります。</p>
+      <div class="holdings-editor-head" aria-hidden="true"><span>銘柄</span><span>保有数量</span><span>取得額（円・任意）</span></div>
+      <div id="holdingsEditorRows" class="holdings-editor-rows"></div>
+      <div class="editor-footer"><span id="holdingsSaveStatus" role="status">0 または空欄は未保有として扱います。</span><div><button type="button" id="cancelHoldingsBtn" class="outline-button">キャンセル</button><button type="button" id="saveHoldingsBtn" class="primary-button">この端末に保存</button></div></div>
     </div>
   </dialog>
 </body>
