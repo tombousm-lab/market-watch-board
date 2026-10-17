@@ -58,6 +58,13 @@ FUNDS = [
         history_url="https://finance.yahoo.co.jp/quote/0331418A/history",
     ),
     dict(
+        id="emaxis_sp500", name="eMAXIS Slim 米国株式（S&P500）", short="eMAXIS Slim S&P500",
+        symbol="03311187", group="fund", currency="JPY_10000",
+        csv_url="https://www.am.mufg.jp/fund_file/setteirai/253266.csv",
+        detail_url="https://emaxis.am.mufg.jp/fund/253266.html",
+        history_url="https://finance.yahoo.co.jp/quote/03311187/history",
+    ),
+    dict(
         id="sbi_div", name="SBI 全世界高配当株式ファンド（年4回決算型）", short="SBI 全世界高配当",
         symbol="8931124A", group="fund", currency="JPY_10000",
         csv_url="https://apl.wealthadvisor.jp/webasp/sbi_am/pc/download.aspx?fnc=2024100101&type=1",
@@ -358,7 +365,7 @@ def main():
     }
     success = sum(item["status"] == "ok" for item in records)
     snapshot = {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "timezone": "Asia/Tokyo", "fx": fx,
         "assets": records,
