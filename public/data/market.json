@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-19T01:07:27+00:00",
+  "generated_at": "2026-10-19T01:55:32+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.89799,
+    "usd_jpy": 158.01801,
     "as_of": "2026-10-19",
     "status": "ok"
   },
@@ -16,9 +16,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/6301.T",
-      "price": 7120.0,
-      "change": -80.0,
-      "change_pct": -1.111,
+      "price": 7190.0,
+      "change": -10.0,
+      "change_pct": -0.139,
       "as_of": "2026-10-19",
       "status": "ok",
       "history": [
@@ -996,7 +996,7 @@
         },
         {
           "date": "2026-10-19",
-          "value": 7120.0
+          "value": 7190.0
         }
       ]
     },
@@ -1008,9 +1008,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/4063.T",
-      "price": 5948.0,
-      "change": -30.0,
-      "change_pct": -0.502,
+      "price": 5977.0,
+      "change": -1.0,
+      "change_pct": -0.017,
       "as_of": "2026-10-19",
       "status": "ok",
       "history": [
@@ -1988,7 +1988,7 @@
         },
         {
           "date": "2026-10-19",
-          "value": 5948.0
+          "value": 5977.0
         }
       ]
     },
@@ -2000,9 +2000,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/2802.T",
-      "price": 5200.0,
-      "change": -80.0,
-      "change_pct": -1.515,
+      "price": 5256.0,
+      "change": -24.0,
+      "change_pct": -0.455,
       "as_of": "2026-10-19",
       "status": "ok",
       "history": [
@@ -2980,7 +2980,7 @@
         },
         {
           "date": "2026-10-19",
-          "value": 5200.0
+          "value": 5256.0
         }
       ]
     },
@@ -10372,9 +10372,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 21316.92,
-      "change": 58.47,
-      "change_pct": 0.275,
+      "price": 21324.04,
+      "change": 65.59,
+      "change_pct": 0.309,
       "as_of": "2026-10-18",
       "status": "ok",
       "history": [
@@ -11384,7 +11384,7 @@
         },
         {
           "date": "2026-10-18",
-          "value": 21316.92
+          "value": 21324.04
         }
       ]
     }
