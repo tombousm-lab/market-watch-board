@@ -1,9 +1,9 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-19T07:19:10+00:00",
+  "generated_at": "2026-10-19T08:09:29+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.97099,
+    "usd_jpy": 158.12601,
     "as_of": "2026-10-19",
     "status": "ok"
   },
@@ -10372,9 +10372,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 21370.43,
-      "change": 33.68,
-      "change_pct": 0.158,
+      "price": 21321.75,
+      "change": -15.0,
+      "change_pct": -0.07,
       "as_of": "2026-10-19",
       "status": "ok",
       "history": [
@@ -11388,7 +11388,7 @@
         },
         {
           "date": "2026-10-19",
-          "value": 21370.43
+          "value": 21321.75
         }
       ]
     }
