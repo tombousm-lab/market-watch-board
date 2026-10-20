@@ -7,8 +7,8 @@
   <meta name="description" content="日本株、米国株、投資信託、S&P 500、金の価格をまとめて確認する個人向けウォッチリスト。">
   <title>Market Desk — My Watchlist</title>
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="stylesheet" href="./style.css?v=2">
-  <script src="./app.js?v=2" defer></script>
+  <link rel="stylesheet" href="./style.css?v=3">
+  <script src="./app.js?v=3" defer></script>
 </head>
 <body>
   <div class="site-shell">
@@ -34,6 +34,14 @@
           <h1 id="heroTitle">見たい市場を、<br><span>ひとつの場所に。</span></h1>
           <p>気になる13銘柄の値動きをまとめてチェック。国内株式から米国株式、投資信託、金まで。</p>
           <div class="hero-status" aria-live="polite"><span id="statusDot" class="status-dot"></span><span id="updateStatus">更新状況を確認しています…</span></div>
+          <div class="manual-refresh-tools">
+            <button id="forceUpdateBtn" class="manual-refresh-button" type="button" title="GitHub Actionsで価格を再取得して再公開する">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.2 5.55"/><path d="M20 4v7h-7"/></svg>
+              <span id="forceUpdateLabel">今すぐ価格を更新</span>
+            </button>
+            <span class="manual-refresh-hint">毎時23分の自動更新＋手動実行</span>
+          </div>
+          <div id="manualProgress" class="manual-progress" role="status" aria-live="polite" hidden></div>
         </div>
         <div class="hero-art" aria-hidden="true">
           <svg viewBox="0 0 480 248" preserveAspectRatio="xMidYMid meet" class="art-svg">
@@ -65,11 +73,12 @@
         </div>
         <div class="portfolio-stats">
           <div class="portfolio-stat emphasis"><span>保有評価額（円換算）</span><strong id="holdingsTotal">¥0</strong><small id="holdingsTotalNote">登録すると自動で計算</small></div>
+          <div class="portfolio-stat day-change-stat"><span>前営業日比</span><strong id="holdingsDayChange">—</strong><small id="holdingsDayChangeNote">昨日との差分を計算</small></div>
           <div class="portfolio-stat"><span>登録した保有銘柄</span><strong id="holdingsCount">0 <em>銘柄</em></strong><small>指数は保有数量の対象外</small></div>
           <div class="portfolio-stat"><span>取得額登録分の評価損益</span><strong id="holdingsPnL">—</strong><small id="holdingsPnlNote">取得額の入力は任意です</small></div>
         </div>
         <div id="portfolioBreakdown" class="portfolio-breakdown" aria-live="polite"><span>まだ数量が設定されていません。上のボタンから登録できます。</span></div>
-        <p class="portfolio-disclaimer">数量・取得額はこのブラウザ内にのみ保存され、GitHubには送信されません。別端末には自動同期されません。損益は税金・手数料・配当等を含まない概算です。</p>
+        <p class="portfolio-disclaimer">数量・取得額はこのブラウザ内にのみ保存され、GitHubには送信されません。別端末には自動同期されません。損益は税金・手数料・配当等を含まない概算です。前営業日比は休場日には直近の取引日との差になります。</p>
       </section>
 
       <section class="content-block" aria-labelledby="watchlistTitle">
@@ -108,6 +117,32 @@
     </main>
     <footer class="footer"><span>© MARKET DESK <span class="footer-faint">/ A PERSONAL LEARNING PROJECT</span></span><span>参考情報です。投資助言ではありません。</span></footer>
   </div>
+
+  <dialog id="manualUpdateDialog" class="manual-dialog" aria-labelledby="manualDialogTitle">
+    <div class="manual-dialog-wrap">
+      <div class="dialog-top"><span>ON-DEMAND REFRESH / GitHub Actions</span><button id="manualDialogClose" type="button" class="icon-button" aria-label="閉じる">×</button></div>
+      <h2 id="manualDialogTitle">最新データを手動取得</h2>
+      <p class="manual-intro">このボタンはGitHub Actionsの価格取得プログラムを<strong>その場で起動</strong>します。公開データが更新されるまで通常は数分かかります。取引所が休みの場合、価格そのものは変わりません。</p>
+      <div class="manual-token-howto">
+        <strong>初回のみ：GitHubの限定トークンを用意</strong>
+        <ol>
+          <li><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">GitHubでFine-grained tokenを作成 ↗</a></li>
+          <li>Resource owner：<strong>tombousm-lab</strong>／Repository access：<strong>Only select repositories → market-watch-board</strong></li>
+          <li>Repository permissions：<strong>Actions → Read and write</strong>。短い有効期限を設定し、発行したトークンを下へ入力してください。</li>
+        </ol>
+      </div>
+      <form id="manualUpdateForm">
+        <label class="manual-token-label" for="manualTokenInput">GitHub Fine-grained personal access token</label>
+        <input id="manualTokenInput" class="manual-token-input" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_…" required>
+        <p class="manual-token-privacy">トークンはこのページを開いている間だけ一時的に保持し、GitHub以外へ送信・GitHubリポジトリ・localStorageに保存しません。ページ再読み込みで消去されます。<strong>ChatGPTには貼り付けないでください。</strong></p>
+        <div class="manual-dialog-actions">
+          <button id="manualDialogCancel" type="button" class="outline-button">キャンセル</button>
+          <button type="submit" class="primary-button">取得処理を起動</button>
+        </div>
+      </form>
+      <p class="manual-github-alternative">トークンを使いたくない場合：<a href="https://github.com/tombousm-lab/market-watch-board/actions/workflows/update.yml" target="_blank" rel="noopener noreferrer">GitHubのActions画面で「Run workflow」を実行 ↗</a> （GitHubログインが必要）</p>
+    </div>
+  </dialog>
 
   <dialog id="detailDialog" class="detail-dialog" aria-labelledby="dialogName">
     <div class="dialog-wrap">

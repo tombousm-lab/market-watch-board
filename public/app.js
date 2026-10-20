@@ -1,5 +1,5 @@
-/* Market Desk — zero-dependency static dashboard. All external market requests
-   happen on GitHub Actions, not in visitors' browsers. */
+/* Market Desk — zero-dependency static dashboard. Price collection runs in
+   GitHub Actions. Authenticated owners can dispatch it from this page. */
 (() => {
   'use strict';
 
@@ -26,6 +26,11 @@
     allcountry:'https://www.am.mufg.jp/fund/253425.html', emaxis_sp500:'https://emaxis.am.mufg.jp/fund/253266.html', sbi_div:'https://apl.wealthadvisor.jp/webasp/sbi_am/pc/basic/sa_2024100101.html',
     gold:'https://finance.yahoo.com/quote/GC%3DF/'
   };
+  const GH_REPO_API = 'https://api.github.com/repos/tombousm-lab/market-watch-board';
+  // Credentials are kept in JS memory only. Never write this value to storage,
+  // published HTML, logs, URLs, or public market data.
+  let manualAccessToken = '';
+  let manualUpdateBusy = false;
   const $ = id => document.getElementById(id);
   const state = {
     data: null, loadError:false, assets: [], filter:'all', search:'', favorites:readFavorites(), favoritesOnly:false,
@@ -58,6 +63,13 @@
   function quantityUnit(a){return a.group==='fund'?'口':a.group==='metal'?'g':'株';}
   function quantityLabel(a){return a.group==='fund'?'口数':a.group==='metal'?'重量（g）':'株数';}
   function getFx(){const n=state.data?.fx?.usd_jpy;return n===null || n===undefined || !Number.isFinite(Number(n)) || Number(n)<=0?null:Number(n);}
+  function getPreviousFx(){const n=state.data?.fx?.previous_usd_jpy;return n===null || n===undefined || !Number.isFinite(Number(n)) || Number(n)<=0?null:Number(n);}
+  function previousPrice(a){
+    if(!Number.isFinite(a.price))return null;
+    if(Number.isFinite(a.change)){const n=a.price-a.change;return Number.isFinite(n)&&n>0?n:null;}
+    const h=nonemptyHistory(a);
+    return h.length>1?Number(h[h.length-2].value):null;
+  }
   function holdingValueJPY(a,quantity){
     if(a.group==='index' || !Number.isFinite(a.price) || quantity<=0)return null;
     const fx=a.currency==='USD'?getFx():1;
@@ -65,20 +77,37 @@
     const m = a.currency === 'JPY_10000' ? 0.0001 : 1;
     return a.price * quantity * m * fx;
   }
+  function previousHoldingValueJPY(a,quantity){
+    if(a.group==='index'||quantity<=0)return null;
+    const p=previousPrice(a);if(p===null)return null;
+    const fx=a.currency==='USD'?getPreviousFx():1;if(fx===null)return null;
+    const m=a.currency==='JPY_10000'?0.0001:1;
+    return p*quantity*m*fx;
+  }
+  function holdingDayChange(a,quantity){
+    const current=holdingValueJPY(a,quantity), previous=previousHoldingValueJPY(a,quantity);
+    if(current===null||previous===null)return null;
+    const amount=current-previous;
+    return {amount, pct:previous>0?amount/previous*100:null, previous, current};
+  }
   function holdingOf(a){return state.holdings[a.id]||{quantity:0,costJPY:null};}
   function jpy(n){return Number.isFinite(n)?'¥'+nf(Math.round(n),0):'—';}
   function formattedQty(n){return nf(n, Number.isInteger(n)?0:Math.min(4,(String(n).split('.')[1]||'').length));}
   function portfolioModel(){
     const assets=state.assets.filter(a=>a.group!=='index' && holdingOf(a).quantity>0);
-    const valued=[];const missing=[];let total=0,profit=0,withCost=0;
+    const valued=[];const missing=[];const dayMissing=[];let total=0,profit=0,withCost=0,dayCurrent=0,dayPrevious=0,dayComparable=0;
     const groups={};
     for(const a of assets){
       const h=holdingOf(a);const value=holdingValueJPY(a,h.quantity);
       if(value===null){missing.push(a);continue;}
       valued.push(a);total+=value;groups[a.group]=(groups[a.group]||0)+value;
+      const day=holdingDayChange(a,h.quantity);
+      if(day){dayCurrent+=day.current;dayPrevious+=day.previous;dayComparable++;}else{dayMissing.push(a);}
       if(Number.isFinite(h.costJPY)) {profit+=value-h.costJPY;withCost++;}
     }
-    return {assets,valued,missing,total,profit,withCost,groups};
+    const dayChange=dayComparable?dayCurrent-dayPrevious:null;
+    const dayPct=dayComparable&&dayPrevious>0?dayChange/dayPrevious*100:null;
+    return {assets,valued,missing,total,profit,withCost,groups,dayMissing,dayComparable,dayChange,dayPct};
   }
   function renderPortfolio(){
     const p=portfolioModel();
@@ -86,6 +115,10 @@
     $('holdingsCount').innerHTML=`${p.assets.length} <em>銘柄</em>`;
     $('holdingsTotalNote').textContent=p.missing.length?`価格・為替未取得の${p.missing.length}銘柄は合計から除外`:
       p.assets.length?'登録済み保有数量から自動計算':'数量を入力すると評価額を計算';
+    const dayEl=$('holdingsDayChange');
+    dayEl.textContent=p.dayChange===null?'—':signed(Math.round(p.dayChange),0)+'円';
+    dayEl.className='change-'+direction(p.dayChange);
+    $('holdingsDayChangeNote').textContent=p.dayChange===null?(p.assets.length?'前日価格・為替の取得待ち':'数量を入力すると計算'):`${signed(p.dayPct,2)}%${p.dayMissing.length?` · ${p.dayMissing.length}銘柄を除外`:''}`;
     $('holdingsPnL').textContent=p.withCost?signed(Math.round(p.profit),0)+'円':'—';
     $('holdingsPnL').className='change-'+direction(p.profit);
     $('holdingsPnlNote').textContent=p.withCost?`取得額を登録した${p.withCost}銘柄のみで算出`:'取得額の入力は任意です';
@@ -107,7 +140,9 @@
     if(!(h.quantity>0)){el.textContent='保有数量：未登録';return;}
     const val=holdingValueJPY(a,h.quantity);
     const profit=val!==null&&Number.isFinite(h.costJPY)?` / 評価損益 ${signed(Math.round(val-h.costJPY),0)}円`:'';
-    el.textContent=`保有：${formattedQty(h.quantity)} ${quantityUnit(a)} / 評価額 ${jpy(val)}${profit}`;
+    const day=holdingDayChange(a,h.quantity);
+    const dayText=day?` / 前営業日比 ${signed(Math.round(day.amount),0)}円 (${signed(day.pct,2)}%)`:'';
+    el.textContent=`保有：${formattedQty(h.quantity)} ${quantityUnit(a)} / 評価額 ${jpy(val)}${dayText}${profit}`;
   }
   function renderHoldingEditor(){
     $('holdingsSaveStatus').textContent='0 または空欄は未保有として扱います。';
@@ -256,7 +291,8 @@
       const lastStatus=a.status==='cached'?'取得失敗・保存値':a.status==='unavailable'?'データ未取得':'前営業日終値等';
       const fav=state.favorites.has(a.id);
       const h=holdingOf(a);const hasQty=h.quantity>0;
-      const owned=hasQty?`<span class="held-badge">保有 ${formattedQty(h.quantity)} ${quantityUnit(a)} · ${jpy(holdingValueJPY(a,h.quantity))}</span>`:'';
+      const heldDay=hasQty?holdingDayChange(a,h.quantity):null;
+      const owned=hasQty?`<span class="held-badge">保有 ${formattedQty(h.quantity)} ${quantityUnit(a)} · ${jpy(holdingValueJPY(a,h.quantity))}${heldDay?` · 前日 ${signed(Math.round(heldDay.amount),0)}円`:''}</span>`:'';
       return `<article class="asset-row" tabindex="0" role="button" data-id="${a.id}" data-group="${a.group}" aria-label="${safeText(a.name)}の価格履歴を見る">
          <div class="asset-name"><span class="asset-mark">${safeText(a.mark)}</span><button class="star${fav?' saved':''}" type="button" aria-pressed="${fav}" aria-label="${safeText(a.short)}をお気に入り${fav?'から削除':'に登録'}" data-fav="${a.id}">${fav?'★':'☆'}</button><div class="name-lines"><span class="asset-title">${safeText(a.short)}</span><span class="asset-code">${safeText(a.symbol)} <i class="group-dot"></i> ${GROUPS[a.group]}</span>${owned}</div></div>
          <div class="asset-price"><strong>${displayPrice(a.price,a.currency)}</strong><small>${safeText(yenSubline(a))}</small></div>
@@ -335,8 +371,146 @@
     }
     renderMetrics();renderPortfolio();renderList();btn.classList.remove('is-spinning');
   }
+  function manualMessage(message, type='info', runLink='') {
+    const container=$('manualProgress');
+    container.textContent=message;
+    container.className='manual-progress'+(type==='error'||type==='warn'?' '+type:'');
+    container.hidden=false;
+    // Strict allowlist so untrusted API data cannot inject a javascript: URL.
+    if(/^https:\/\/github\.com\/tombousm-lab\/market-watch-board\/actions\/runs\/\d+$/.test(runLink)) {
+      const a=document.createElement('a');
+      a.href=runLink;a.target='_blank';a.rel='noopener noreferrer';
+      a.textContent='GitHubで進捗を確認 ↗';container.append(' ',a);
+    }
+  }
+  function setManualBusy(busy) {
+    manualUpdateBusy=busy;
+    const btn=$('forceUpdateBtn');btn.disabled=busy;
+    btn.classList.toggle('is-updating',busy);
+    $('forceUpdateLabel').textContent=busy?'データ取得中…':'今すぐ価格を更新';
+  }
+  function displaySnapshot(snapshot) {
+    state.data=snapshot;state.loadError=false;
+    state.assets=combineAssets(snapshot);
+    renderMetrics();renderPortfolio();renderList();
+    if($('detailDialog').open && state.current) {
+      const previousRange=state.range;
+      openDetail(state.current);
+      state.range=previousRange;
+      document.querySelectorAll('.range-group button').forEach(b=>b.classList.toggle('chosen',Number(b.dataset.range)===previousRange));
+      updateDetailChart();
+    }
+  }
+  async function readSnapshot() {
+    const response=await fetch('./data/market.json?manual='+Date.now(),{cache:'no-store'});
+    if(!response.ok) throw new Error(`公開データの取得に失敗しました (HTTP ${response.status})`);
+    return response.json();
+  }
+  function manualErrorForStatus(status) {
+    if(status===401) return '認証失敗 (401)：トークンを確認して再入力してください。';
+    if(status===403) return '権限不足 (403)：market-watch-boardにActions（Read and write）の権限を付けてください。';
+    if(status===404) return '設定が見つかりません (404)：.github/workflows/update.yml がmainブランチにあるか確認してください。';
+    if(status===422) return '実行できません (422)：mainブランチでworkflow_dispatchが有効か確認してください。';
+    if(status===429) return 'GitHubのAPI利用制限 (429) に達しました。少し時間を置いてください。';
+    return `GitHub Actionsを起動できませんでした（HTTP ${status}）。`;
+  }
+  async function runManualUpdate() {
+    if(manualUpdateBusy || !manualAccessToken) return;
+    setManualBusy(true);
+    const before=Date.parse(state.data?.generated_at||'')||0;
+    const requestedAt=Date.now();
+    let runLink='';
+    try {
+      manualMessage('GitHub Actionsにデータ取得をリクエストしています…');
+      const response=await fetch(`${GH_REPO_API}/actions/workflows/update.yml/dispatches`,{
+        method:'POST',
+        headers:{'Accept':'application/vnd.github+json','Authorization':`Bearer ${manualAccessToken}`,'Content-Type':'application/json'},
+        body:JSON.stringify({ref:'main'}),
+        cache:'no-store'
+      });
+      if(!response.ok) {
+        if(response.status===401||response.status===403) manualAccessToken='';
+        throw new Error(manualErrorForStatus(response.status));
+      }
+      // The recent GitHub API returns HTTP 200 with workflow_run_id; older
+      // API responses can be 204 with an empty body.
+      let runId=null;
+      if(response.status!==204) {
+        const result=await response.json().catch(()=>({}));
+        if(Number.isSafeInteger(Number(result.workflow_run_id)) && Number(result.workflow_run_id)>0) runId=Number(result.workflow_run_id);
+        if(typeof result.html_url==='string' && /^https:\/\/github\.com\/tombousm-lab\/market-watch-board\/actions\/runs\/\d+$/.test(result.html_url)) runLink=result.html_url;
+      }
+      const start=Date.now();
+      let runComplete=false;
+      manualMessage('取得を受け付けました。GitHub Actionsで処理中です。画面を開いたままにすると公開まで自動確認します。','info',runLink);
+      while(Date.now()-start<8*60*1000) {
+        await new Promise(resolve=>setTimeout(resolve,10000));
+        if(runId && !runComplete) {
+          // This is a public repository: no token is needed to read run status.
+          try {
+            const statusResponse=await fetch(`${GH_REPO_API}/actions/runs/${runId}`,{headers:{'Accept':'application/vnd.github+json'},cache:'no-store'});
+            if(statusResponse.ok) {
+              const run=await statusResponse.json();
+              if(run.status==='completed') {
+                if(run.conclusion!=='success') throw new Error(`GitHub Actionsの処理が${run.conclusion||'失敗'}で終了しました。実行ログをご確認ください。`);
+                runComplete=true;
+                manualMessage('価格取得処理が成功しました。GitHub Pagesへの反映を確認しています…','info',runLink);
+              }
+            }
+          } catch(err) {
+            if(err instanceof Error && /GitHub Actionsの処理が/.test(err.message)) throw err;
+            // A transient GitHub API error does not mean the workflow failed.
+          }
+        }
+        if(runId && !runComplete) continue;
+        try {
+          const snapshot=await readSnapshot();
+          const createdAt=Date.parse(snapshot?.generated_at||'')||0;
+          if(createdAt>before && createdAt>=requestedAt-5000) {
+            displaySnapshot(snapshot);
+            const cached=(snapshot.assets||[]).filter(a=>a.status==='cached').length;
+            const missing=(snapshot.assets||[]).filter(a=>a.status==='unavailable').length;
+            manualMessage(`更新完了：公開データを再読み込みしました。${cached||missing?`なお${cached}件は前回の保存値、${missing}件は未取得です。`:'価格とチャートを反映しました。'}`,'info',runLink);
+            return;
+          }
+        } catch(err) { /* Pages may still be deploying; try again. */ }
+      }
+      manualMessage('取得開始から8分経過しました。処理状況をGitHub Actionsで確認し、必要なら右上の丸矢印で再読み込みしてください。','warn',runLink);
+    } catch(err) {
+      manualMessage(err?.message||'データ取得の開始に失敗しました。','error',runLink);
+    } finally {
+      setManualBusy(false);
+    }
+  }
+  function openManualDialog() {
+    const dialog=$('manualUpdateDialog');
+    if(!dialog.open) dialog.showModal();
+    $('manualTokenInput').value='';
+    $('manualTokenInput').focus();
+  }
+  function bindManualUpdate() {
+    $('forceUpdateBtn').addEventListener('click',()=>{
+      if(manualUpdateBusy) return;
+      if(!manualAccessToken){openManualDialog();return;}
+      runManualUpdate();
+    });
+    $('manualUpdateForm').addEventListener('submit',event=>{
+      event.preventDefault();
+      const token=$('manualTokenInput').value.trim();
+      if(!token) return;
+      // The token is used only for the GitHub API request, not retained in the DOM.
+      manualAccessToken=token;
+      $('manualTokenInput').value='';
+      $('manualUpdateDialog').close();
+      runManualUpdate();
+    });
+    $('manualDialogClose').addEventListener('click',()=>$('manualUpdateDialog').close());
+    $('manualDialogCancel').addEventListener('click',()=>$('manualUpdateDialog').close());
+    $('manualUpdateDialog').addEventListener('click',event=>{if(event.target===$('manualUpdateDialog'))$('manualUpdateDialog').close();});
+  }
   function bind() {
     $('reloadBtn').addEventListener('click',load);
+    bindManualUpdate();
     $('editHoldingsBtn').addEventListener('click',()=>openHoldingsEditor());
     $('exportHoldingsBtn').addEventListener('click',exportHoldings);
     $('importHoldingsFile').addEventListener('change',async e=>{await importHoldings(e.target.files?.[0]);e.target.value='';});
