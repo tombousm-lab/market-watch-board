@@ -358,10 +358,20 @@ def main():
 
     current_fx = normalize_prices(quotes.get("JPY=X", []))
     prev_fx = previous.get("fx") or {}
+    fx_history = normalize_prices((prev_fx.get("history") or []) + current_fx)
+    fx_current = fx_history[-1] if fx_history else None
+    fx_previous = fx_history[-2] if len(fx_history) > 1 else None
+    fx_change = round(fx_current["value"] - fx_previous["value"], 5) if fx_current and fx_previous else None
+    fx_change_pct = round(fx_change / fx_previous["value"] * 100, 3) if fx_change is not None and fx_previous and fx_previous["value"] else None
     fx = {
-        "usd_jpy": current_fx[-1]["value"] if current_fx else prev_fx.get("usd_jpy"),
-        "as_of": current_fx[-1]["date"] if current_fx else prev_fx.get("as_of"),
+        "usd_jpy": fx_current["value"] if fx_current else prev_fx.get("usd_jpy"),
+        "previous_usd_jpy": fx_previous["value"] if fx_previous else prev_fx.get("previous_usd_jpy"),
+        "change": fx_change if fx_change is not None else prev_fx.get("change"),
+        "change_pct": fx_change_pct if fx_change_pct is not None else prev_fx.get("change_pct"),
+        "as_of": fx_current["date"] if fx_current else prev_fx.get("as_of"),
+        "previous_as_of": fx_previous["date"] if fx_previous else prev_fx.get("previous_as_of"),
         "status": "ok" if current_fx else ("cached" if prev_fx.get("usd_jpy") else "unavailable"),
+        "history": fx_history if fx_history else prev_fx.get("history", []),
     }
     success = sum(item["status"] == "ok" for item in records)
     snapshot = {
