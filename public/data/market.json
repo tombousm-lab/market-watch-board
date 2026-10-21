@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-21T10:58:29+00:00",
+  "generated_at": "2026-10-21T11:57:40+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 158.009,
+    "usd_jpy": 157.909,
     "previous_usd_jpy": 158.52299,
-    "change": -0.51399,
-    "change_pct": -0.324,
+    "change": -0.61399,
+    "change_pct": -0.387,
     "as_of": "2026-10-21",
     "previous_as_of": "2026-10-20",
     "status": "ok",
@@ -1053,7 +1053,7 @@
       },
       {
         "date": "2026-10-21",
-        "value": 158.009
+        "value": 157.909
       }
     ]
   },
@@ -10233,12 +10233,12 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
+      "source_url": "https://www.am.mufg.jp/fund/253425.html",
       "price": 37859.0,
       "change": 176.0,
       "change_pct": 0.467,
       "as_of": "2026-10-20",
-      "status": "ok",
+      "status": "cached",
       "history": [
         {
           "date": "2026-09-15",
@@ -10337,12 +10337,12 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
+      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
       "price": 44943.0,
       "change": 369.0,
       "change_pct": 0.828,
       "as_of": "2026-10-20",
-      "status": "ok",
+      "status": "cached",
       "history": [
         {
           "date": "2026-09-15",
@@ -11518,9 +11518,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 21051.46,
-      "change": -61.85,
-      "change_pct": -0.293,
+      "price": 21102.1,
+      "change": -11.21,
+      "change_pct": -0.053,
       "as_of": "2026-10-21",
       "status": "ok",
       "history": [
@@ -12542,7 +12542,7 @@
         },
         {
           "date": "2026-10-21",
-          "value": 21051.46
+          "value": 21102.1
         }
       ]
     }
