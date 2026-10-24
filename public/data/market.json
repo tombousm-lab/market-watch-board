@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-24T14:51:38+00:00",
+  "generated_at": "2026-10-24T15:52:45+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
     "usd_jpy": 156.814,
@@ -10576,10 +10576,6 @@
       "as_of": "2026-10-23",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-09-19",
-          "value": 11339.0
-        },
         {
           "date": "2025-09-22",
           "value": 11351.0
