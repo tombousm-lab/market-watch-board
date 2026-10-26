@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-26T05:01:57+00:00",
+  "generated_at": "2026-10-26T05:58:47+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 156.951,
+    "usd_jpy": 157.077,
     "previous_usd_jpy": 156.80701,
-    "change": 0.14399,
-    "change_pct": 0.092,
+    "change": 0.26999,
+    "change_pct": 0.172,
     "as_of": "2026-10-26",
     "previous_as_of": "2026-10-25",
     "status": "ok",
@@ -1069,7 +1069,7 @@
       },
       {
         "date": "2026-10-26",
-        "value": 156.951
+        "value": 157.077
       }
     ]
   },
@@ -1082,9 +1082,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/6301.T",
-      "price": 6713.0,
-      "change": 5.0,
-      "change_pct": 0.075,
+      "price": 6728.0,
+      "change": 20.0,
+      "change_pct": 0.298,
       "as_of": "2026-10-26",
       "status": "ok",
       "history": [
@@ -2082,7 +2082,7 @@
         },
         {
           "date": "2026-10-26",
-          "value": 6713.0
+          "value": 6728.0
         }
       ]
     },
@@ -2094,9 +2094,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/4063.T",
-      "price": 5790.0,
-      "change": -36.0,
-      "change_pct": -0.618,
+      "price": 5792.0,
+      "change": -34.0,
+      "change_pct": -0.584,
       "as_of": "2026-10-26",
       "status": "ok",
       "history": [
@@ -3094,7 +3094,7 @@
         },
         {
           "date": "2026-10-26",
-          "value": 5790.0
+          "value": 5792.0
         }
       ]
     },
@@ -11662,9 +11662,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20323.13,
-      "change": 156.78,
-      "change_pct": 0.777,
+      "price": 20344.5,
+      "change": 178.15,
+      "change_pct": 0.883,
       "as_of": "2026-10-26",
       "status": "ok",
       "history": [
@@ -12702,7 +12702,7 @@
         },
         {
           "date": "2026-10-26",
-          "value": 20323.13
+          "value": 20344.5
         }
       ]
     }
