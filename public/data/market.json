@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-26T10:08:29+00:00",
+  "generated_at": "2026-10-26T11:03:20+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.35001,
+    "usd_jpy": 157.33099,
     "previous_usd_jpy": 156.80701,
-    "change": 0.543,
-    "change_pct": 0.346,
+    "change": 0.52398,
+    "change_pct": 0.334,
     "as_of": "2026-10-26",
     "previous_as_of": "2026-10-25",
     "status": "ok",
@@ -1069,7 +1069,7 @@
       },
       {
         "date": "2026-10-26",
-        "value": 157.35001
+        "value": 157.33099
       }
     ]
   },
@@ -10357,12 +10357,12 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://www.am.mufg.jp/fund/253425.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
       "price": 37162.0,
       "change": -874.0,
       "change_pct": -2.298,
       "as_of": "2026-10-23",
-      "status": "cached",
+      "status": "ok",
       "history": [
         {
           "date": "2026-09-15",
@@ -10473,12 +10473,12 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
       "price": 44192.0,
       "change": -1034.0,
       "change_pct": -2.286,
       "as_of": "2026-10-23",
-      "status": "cached",
+      "status": "ok",
       "history": [
         {
           "date": "2026-09-15",
@@ -11662,9 +11662,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20395.04,
-      "change": 228.69,
-      "change_pct": 1.134,
+      "price": 20368.8,
+      "change": 202.45,
+      "change_pct": 1.004,
       "as_of": "2026-10-26",
       "status": "ok",
       "history": [
@@ -12702,7 +12702,7 @@
         },
         {
           "date": "2026-10-26",
-          "value": 20395.04
+          "value": 20368.8
         }
       ]
     }
