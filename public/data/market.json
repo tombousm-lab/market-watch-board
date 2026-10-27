@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-27T11:01:53+00:00",
+  "generated_at": "2026-10-27T11:58:27+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.655,
+    "usd_jpy": 157.759,
     "previous_usd_jpy": 156.83,
-    "change": 0.825,
-    "change_pct": 0.526,
+    "change": 0.929,
+    "change_pct": 0.592,
     "as_of": "2026-10-27",
     "previous_as_of": "2026-10-26",
     "status": "ok",
@@ -1073,7 +1073,7 @@
       },
       {
         "date": "2026-10-27",
-        "value": 157.655
+        "value": 157.759
       }
     ]
   },
@@ -11714,9 +11714,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20403.14,
-      "change": 40.71,
-      "change_pct": 0.2,
+      "price": 20403.92,
+      "change": 41.49,
+      "change_pct": 0.204,
       "as_of": "2026-10-27",
       "status": "ok",
       "history": [
@@ -12758,7 +12758,7 @@
         },
         {
           "date": "2026-10-27",
-          "value": 20403.14
+          "value": 20403.92
         }
       ]
     }
