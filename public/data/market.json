@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-27T02:01:46+00:00",
+  "generated_at": "2026-10-27T02:59:41+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.629,
+    "usd_jpy": 157.69901,
     "previous_usd_jpy": 156.83,
-    "change": 0.799,
-    "change_pct": 0.509,
+    "change": 0.86901,
+    "change_pct": 0.554,
     "as_of": "2026-10-27",
     "previous_as_of": "2026-10-26",
     "status": "ok",
@@ -1073,7 +1073,7 @@
       },
       {
         "date": "2026-10-27",
-        "value": 157.629
+        "value": 157.69901
       }
     ]
   },
@@ -1086,9 +1086,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/6301.T",
-      "price": 6745.0,
-      "change": 12.0,
-      "change_pct": 0.178,
+      "price": 6815.0,
+      "change": 82.0,
+      "change_pct": 1.218,
       "as_of": "2026-10-27",
       "status": "ok",
       "history": [
@@ -2090,7 +2090,7 @@
         },
         {
           "date": "2026-10-27",
-          "value": 6745.0
+          "value": 6815.0
         }
       ]
     },
@@ -2102,9 +2102,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/4063.T",
-      "price": 5865.0,
-      "change": 82.0,
-      "change_pct": 1.418,
+      "price": 5854.0,
+      "change": 71.0,
+      "change_pct": 1.228,
       "as_of": "2026-10-27",
       "status": "ok",
       "history": [
@@ -3106,7 +3106,7 @@
         },
         {
           "date": "2026-10-27",
-          "value": 5865.0
+          "value": 5854.0
         }
       ]
     },
@@ -3118,9 +3118,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/2802.T",
-      "price": 5122.0,
-      "change": 109.0,
-      "change_pct": 2.174,
+      "price": 5096.0,
+      "change": 83.0,
+      "change_pct": 1.656,
       "as_of": "2026-10-27",
       "status": "ok",
       "history": [
@@ -4122,7 +4122,7 @@
         },
         {
           "date": "2026-10-27",
-          "value": 5122.0
+          "value": 5096.0
         }
       ]
     },
