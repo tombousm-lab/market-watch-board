@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-01T21:57:10+00:00",
+  "generated_at": "2026-11-01T22:57:42+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.804,
-    "previous_usd_jpy": 157.83299,
-    "change": -0.02899,
-    "change_pct": -0.018,
-    "as_of": "2026-10-30",
-    "previous_as_of": "2026-10-29",
+    "usd_jpy": 157.485,
+    "previous_usd_jpy": 157.804,
+    "change": -0.319,
+    "change_pct": -0.202,
+    "as_of": "2026-11-01",
+    "previous_as_of": "2026-10-30",
     "status": "ok",
     "history": [
       {
@@ -1086,6 +1086,10 @@
       {
         "date": "2026-10-30",
         "value": 157.804
+      },
+      {
+        "date": "2026-11-01",
+        "value": 157.485
       }
     ]
   },
