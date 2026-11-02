@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-02T21:05:02+00:00",
+  "generated_at": "2026-11-02T22:02:52+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.923,
+    "usd_jpy": 157.856,
     "previous_usd_jpy": 157.645,
-    "change": 0.278,
-    "change_pct": 0.176,
+    "change": 0.211,
+    "change_pct": 0.134,
     "as_of": "2026-11-02",
     "previous_as_of": "2026-11-01",
     "status": "ok",
@@ -1093,7 +1093,7 @@
       },
       {
         "date": "2026-11-02",
-        "value": 157.923
+        "value": 157.856
       }
     ]
   },
@@ -4202,9 +4202,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/BRK-B",
-      "price": 556.92999,
-      "change": 14.44,
-      "change_pct": 2.662,
+      "price": 556.10999,
+      "change": 13.62,
+      "change_pct": 2.511,
       "as_of": "2026-11-02",
       "status": "ok",
       "history": [
@@ -5254,7 +5254,7 @@
         },
         {
           "date": "2026-11-02",
-          "value": 556.92999
+          "value": 556.10999
         }
       ]
     },
@@ -5266,9 +5266,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/TSM",
-      "price": 398.517,
-      "change": -7.613,
-      "change_pct": -1.875,
+      "price": 398.63,
+      "change": -7.5,
+      "change_pct": -1.847,
       "as_of": "2026-11-02",
       "status": "ok",
       "history": [
@@ -6318,7 +6318,7 @@
         },
         {
           "date": "2026-11-02",
-          "value": 398.517
+          "value": 398.63
         }
       ]
     },
@@ -11946,9 +11946,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20090.03,
-      "change": 225.69,
-      "change_pct": 1.136,
+      "price": 20082.01,
+      "change": 217.67,
+      "change_pct": 1.096,
       "as_of": "2026-11-02",
       "status": "ok",
       "history": [
@@ -13010,7 +13010,7 @@
         },
         {
           "date": "2026-11-02",
-          "value": 20090.03
+          "value": 20082.01
         }
       ]
     }
