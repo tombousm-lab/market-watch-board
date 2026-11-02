@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-02T23:02:09+00:00",
+  "generated_at": "2026-11-02T23:55:58+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.93401,
+    "usd_jpy": 157.901,
     "previous_usd_jpy": 157.645,
-    "change": 0.28901,
-    "change_pct": 0.183,
+    "change": 0.256,
+    "change_pct": 0.162,
     "as_of": "2026-11-02",
     "previous_as_of": "2026-11-01",
     "status": "ok",
@@ -1093,7 +1093,7 @@
       },
       {
         "date": "2026-11-02",
-        "value": 157.93401
+        "value": 157.901
       }
     ]
   },
@@ -10585,12 +10585,12 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
+      "source_url": "https://www.am.mufg.jp/fund/253425.html",
       "price": 37188.0,
       "change": -528.0,
       "change_pct": -1.4,
       "as_of": "2026-11-02",
-      "status": "ok",
+      "status": "cached",
       "history": [
         {
           "date": "2026-09-15",
@@ -10725,12 +10725,12 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
+      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
       "price": 44077.0,
       "change": -739.0,
       "change_pct": -1.649,
       "as_of": "2026-11-02",
-      "status": "ok",
+      "status": "cached",
       "history": [
         {
           "date": "2026-09-15",
@@ -11946,9 +11946,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20090.41,
-      "change": 226.07,
-      "change_pct": 1.138,
+      "price": 20079.11,
+      "change": 214.77,
+      "change_pct": 1.081,
       "as_of": "2026-11-02",
       "status": "ok",
       "history": [
@@ -13010,7 +13010,7 @@
         },
         {
           "date": "2026-11-02",
-          "value": 20090.41
+          "value": 20079.11
         }
       ]
     }
