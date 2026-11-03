@@ -1,14 +1,14 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-02T23:55:58+00:00",
+  "generated_at": "2026-11-03T01:32:07+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 157.901,
-    "previous_usd_jpy": 157.645,
-    "change": 0.256,
-    "change_pct": 0.162,
-    "as_of": "2026-11-02",
-    "previous_as_of": "2026-11-01",
+    "usd_jpy": 157.92999,
+    "previous_usd_jpy": 157.677,
+    "change": 0.25299,
+    "change_pct": 0.16,
+    "as_of": "2026-11-03",
+    "previous_as_of": "2026-11-02",
     "status": "ok",
     "history": [
       {
@@ -1093,7 +1093,11 @@
       },
       {
         "date": "2026-11-02",
-        "value": 157.901
+        "value": 157.677
+      },
+      {
+        "date": "2026-11-03",
+        "value": 157.92999
       }
     ]
   },
@@ -10585,12 +10589,12 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://www.am.mufg.jp/fund/253425.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
       "price": 37188.0,
       "change": -528.0,
       "change_pct": -1.4,
       "as_of": "2026-11-02",
-      "status": "cached",
+      "status": "ok",
       "history": [
         {
           "date": "2026-09-15",
@@ -10725,12 +10729,12 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
       "price": 44077.0,
       "change": -739.0,
       "change_pct": -1.649,
       "as_of": "2026-11-02",
-      "status": "cached",
+      "status": "ok",
       "history": [
         {
           "date": "2026-09-15",
@@ -11946,9 +11950,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20079.11,
-      "change": 214.77,
-      "change_pct": 1.081,
+      "price": 20115.0,
+      "change": 250.66,
+      "change_pct": 1.262,
       "as_of": "2026-11-02",
       "status": "ok",
       "history": [
@@ -13010,7 +13014,7 @@
         },
         {
           "date": "2026-11-02",
-          "value": 20079.11
+          "value": 20115.0
         }
       ]
     }
