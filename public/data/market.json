@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-03T12:08:26+00:00",
+  "generated_at": "2026-11-03T13:32:56+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 158.23599,
+    "usd_jpy": 158.052,
     "previous_usd_jpy": 157.677,
-    "change": 0.55899,
-    "change_pct": 0.355,
+    "change": 0.375,
+    "change_pct": 0.238,
     "as_of": "2026-11-03",
     "previous_as_of": "2026-11-02",
     "status": "ok",
@@ -1097,7 +1097,7 @@
       },
       {
         "date": "2026-11-03",
-        "value": 158.23599
+        "value": 158.052
       }
     ]
   },
@@ -10589,12 +10589,12 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
+      "source_url": "https://www.am.mufg.jp/fund/253425.html",
       "price": 37188.0,
       "change": -528.0,
       "change_pct": -1.4,
       "as_of": "2026-11-02",
-      "status": "ok",
+      "status": "cached",
       "history": [
         {
           "date": "2026-09-15",
@@ -10729,12 +10729,12 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
+      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
       "price": 44077.0,
       "change": -739.0,
       "change_pct": -1.649,
       "as_of": "2026-11-02",
-      "status": "ok",
+      "status": "cached",
       "history": [
         {
           "date": "2026-09-15",
@@ -11950,9 +11950,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 19917.19,
-      "change": -206.43,
-      "change_pct": -1.026,
+      "price": 20024.12,
+      "change": -99.5,
+      "change_pct": -0.494,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -13018,7 +13018,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 19917.19
+          "value": 20024.12
         }
       ]
     }
