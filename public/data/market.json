@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-03T16:18:47+00:00",
+  "generated_at": "2026-11-03T17:20:41+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 158.433,
+    "usd_jpy": 158.52499,
     "previous_usd_jpy": 157.677,
-    "change": 0.756,
-    "change_pct": 0.479,
+    "change": 0.84799,
+    "change_pct": 0.538,
     "as_of": "2026-11-03",
     "previous_as_of": "2026-11-02",
     "status": "ok",
@@ -1097,7 +1097,7 @@
       },
       {
         "date": "2026-11-03",
-        "value": 158.433
+        "value": 158.52499
       }
     ]
   },
@@ -4206,9 +4206,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/BRK-B",
-      "price": 558.90997,
-      "change": 2.79998,
-      "change_pct": 0.503,
+      "price": 557.07977,
+      "change": 0.96978,
+      "change_pct": 0.174,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -5262,7 +5262,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 558.90997
+          "value": 557.07977
         }
       ]
     },
@@ -5274,9 +5274,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/TSM",
-      "price": 406.79501,
-      "change": 8.16501,
-      "change_pct": 2.048,
+      "price": 405.44501,
+      "change": 6.81501,
+      "change_pct": 1.71,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -6330,7 +6330,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 406.79501
+          "value": 405.44501
         }
       ]
     },
@@ -6342,9 +6342,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/GOOGL",
-      "price": 278.32001,
-      "change": -0.66998,
-      "change_pct": -0.24,
+      "price": 279.97,
+      "change": 0.98001,
+      "change_pct": 0.351,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -7398,7 +7398,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 278.32001
+          "value": 279.97
         }
       ]
     },
@@ -7410,9 +7410,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/ADSK",
-      "price": 255.38,
-      "change": -2.53,
-      "change_pct": -0.981,
+      "price": 255.53999,
+      "change": -2.37001,
+      "change_pct": -0.919,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -8466,7 +8466,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 255.38
+          "value": 255.53999
         }
       ]
     },
@@ -8478,9 +8478,9 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/TXG",
-      "price": 64.4325,
-      "change": 2.8025,
-      "change_pct": 4.547,
+      "price": 65.16,
+      "change": 3.53,
+      "change_pct": 5.728,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -9534,7 +9534,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 64.4325
+          "value": 65.16
         }
       ]
     },
@@ -9546,9 +9546,9 @@
       "group": "index",
       "currency": "PTS",
       "source_url": "https://finance.yahoo.com/quote/%5EGSPC",
-      "price": 7581.0,
-      "change": 39.6001,
-      "change_pct": 0.525,
+      "price": 7576.24023,
+      "change": 34.84033,
+      "change_pct": 0.462,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -10602,7 +10602,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 7581.0
+          "value": 7576.24023
         }
       ]
     },
@@ -11970,9 +11970,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20098.88,
-      "change": -24.74,
-      "change_pct": -0.123,
+      "price": 20084.55,
+      "change": -39.07,
+      "change_pct": -0.194,
       "as_of": "2026-11-03",
       "status": "ok",
       "history": [
@@ -13038,7 +13038,7 @@
         },
         {
           "date": "2026-11-03",
-          "value": 20098.88
+          "value": 20084.55
         }
       ]
     }
