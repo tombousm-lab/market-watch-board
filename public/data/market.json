@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-08T20:59:28+00:00",
+  "generated_at": "2026-11-08T21:58:40+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 158.35001,
+    "usd_jpy": 158.33501,
     "previous_usd_jpy": 158.425,
-    "change": -0.07499,
-    "change_pct": -0.047,
+    "change": -0.08999,
+    "change_pct": -0.057,
     "as_of": "2026-11-08",
     "previous_as_of": "2026-11-07",
     "status": "ok",
@@ -1117,7 +1117,7 @@
       },
       {
         "date": "2026-11-08",
-        "value": 158.35001
+        "value": 158.33501
       }
     ]
   },
