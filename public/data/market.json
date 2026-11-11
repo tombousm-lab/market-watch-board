@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-11T04:22:55+00:00",
+  "generated_at": "2026-11-11T05:26:51+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 158.825,
+    "usd_jpy": 158.742,
     "previous_usd_jpy": 157.983,
-    "change": 0.842,
-    "change_pct": 0.533,
+    "change": 0.759,
+    "change_pct": 0.48,
     "as_of": "2026-11-11",
     "previous_as_of": "2026-11-10",
     "status": "ok",
@@ -1129,7 +1129,7 @@
       },
       {
         "date": "2026-11-11",
-        "value": 158.825
+        "value": 158.742
       }
     ]
   },
@@ -2198,9 +2198,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/4063.T",
-      "price": 5705.0,
-      "change": 47.0,
-      "change_pct": 0.831,
+      "price": 5699.0,
+      "change": 41.0,
+      "change_pct": 0.725,
       "as_of": "2026-11-11",
       "status": "ok",
       "history": [
@@ -3242,7 +3242,7 @@
         },
         {
           "date": "2026-11-11",
-          "value": 5705.0
+          "value": 5699.0
         }
       ]
     },
@@ -3254,9 +3254,9 @@
       "group": "jp",
       "currency": "JPY",
       "source_url": "https://finance.yahoo.co.jp/quote/2802.T",
-      "price": 4240.0,
-      "change": -105.0,
-      "change_pct": -2.417,
+      "price": 4234.0,
+      "change": -111.0,
+      "change_pct": -2.555,
       "as_of": "2026-11-11",
       "status": "ok",
       "history": [
@@ -4298,7 +4298,7 @@
         },
         {
           "date": "2026-11-11",
-          "value": 4240.0
+          "value": 4234.0
         }
       ]
     },
@@ -14066,10 +14066,10 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 20590.86,
-      "change": -348.68,
-      "change_pct": -1.665,
-      "as_of": "2026-11-10",
+      "price": 20733.16,
+      "change": 262.68,
+      "change_pct": 1.283,
+      "as_of": "2026-11-11",
       "status": "ok",
       "history": [
         {
@@ -15158,7 +15158,11 @@
         },
         {
           "date": "2026-11-10",
-          "value": 20590.86
+          "value": 20470.48
+        },
+        {
+          "date": "2026-11-11",
+          "value": 20733.16
         }
       ]
     }
