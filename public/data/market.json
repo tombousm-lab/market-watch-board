@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-14T07:31:37+00:00",
+  "generated_at": "2026-11-14T09:12:11+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
     "usd_jpy": 159.875,
@@ -10941,7 +10941,7 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://www.am.mufg.jp/fund/253425.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
       "price": 37748.0,
       "change": -104.0,
       "change_pct": -0.275,
@@ -12017,7 +12017,7 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
       "price": 44751.0,
       "change": -77.0,
       "change_pct": -0.172,
