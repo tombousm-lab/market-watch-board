@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-17T12:10:29+00:00",
+  "generated_at": "2026-11-17T21:11:43+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 159.239,
+    "usd_jpy": 159.334,
     "previous_usd_jpy": 159.78,
-    "change": -0.541,
-    "change_pct": -0.339,
+    "change": -0.446,
+    "change_pct": -0.279,
     "as_of": "2026-11-17",
     "previous_as_of": "2026-11-16",
     "status": "ok",
@@ -1149,7 +1149,7 @@
       },
       {
         "date": "2026-11-17",
-        "value": 159.239
+        "value": 159.334
       }
     ]
   },
@@ -4378,10 +4378,10 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/BRK-B",
-      "price": 592.84998,
-      "change": -0.09002,
-      "change_pct": -0.015,
-      "as_of": "2026-11-16",
+      "price": 587.04999,
+      "change": -5.79999,
+      "change_pct": -0.978,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -5471,6 +5471,10 @@
         {
           "date": "2026-11-16",
           "value": 592.84998
+        },
+        {
+          "date": "2026-11-17",
+          "value": 587.04999
         }
       ]
     },
@@ -5482,10 +5486,10 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/TSM",
-      "price": 373.45001,
-      "change": -25.28,
-      "change_pct": -6.34,
-      "as_of": "2026-11-16",
+      "price": 359.63699,
+      "change": -13.81302,
+      "change_pct": -3.699,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -6575,6 +6579,10 @@
         {
           "date": "2026-11-16",
           "value": 373.45001
+        },
+        {
+          "date": "2026-11-17",
+          "value": 359.63699
         }
       ]
     },
@@ -6586,10 +6594,10 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/GOOGL",
-      "price": 283.72,
-      "change": -12.04999,
-      "change_pct": -4.074,
-      "as_of": "2026-11-16",
+      "price": 280.20001,
+      "change": -3.51999,
+      "change_pct": -1.241,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -7679,6 +7687,10 @@
         {
           "date": "2026-11-16",
           "value": 283.72
+        },
+        {
+          "date": "2026-11-17",
+          "value": 280.20001
         }
       ]
     },
@@ -7690,10 +7702,10 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/ADSK",
-      "price": 265.53,
-      "change": 1.10999,
-      "change_pct": 0.42,
-      "as_of": "2026-11-16",
+      "price": 255.22,
+      "change": -10.31,
+      "change_pct": -3.883,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -8783,6 +8795,10 @@
         {
           "date": "2026-11-16",
           "value": 265.53
+        },
+        {
+          "date": "2026-11-17",
+          "value": 255.22
         }
       ]
     },
@@ -8794,10 +8810,10 @@
       "group": "us",
       "currency": "USD",
       "source_url": "https://finance.yahoo.com/quote/TXG",
-      "price": 54.99,
-      "change": -3.2,
-      "change_pct": -5.499,
-      "as_of": "2026-11-16",
+      "price": 56.3,
+      "change": 1.31,
+      "change_pct": 2.382,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -9887,6 +9903,10 @@
         {
           "date": "2026-11-16",
           "value": 54.99
+        },
+        {
+          "date": "2026-11-17",
+          "value": 56.3
         }
       ]
     },
@@ -9898,10 +9918,10 @@
       "group": "index",
       "currency": "PTS",
       "source_url": "https://finance.yahoo.com/quote/%5EGSPC",
-      "price": 7416.58984,
-      "change": -145.08008,
-      "change_pct": -1.919,
-      "as_of": "2026-11-16",
+      "price": 7340.52979,
+      "change": -76.06005,
+      "change_pct": -1.026,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -10991,6 +11011,10 @@
         {
           "date": "2026-11-16",
           "value": 7416.58984
+        },
+        {
+          "date": "2026-11-17",
+          "value": 7340.52979
         }
       ]
     },
@@ -11002,10 +11026,10 @@
       "group": "fund",
       "currency": "JPY_10000",
       "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
-      "price": 37578.0,
-      "change": -170.0,
-      "change_pct": -0.45,
-      "as_of": "2026-11-16",
+      "price": 36831.0,
+      "change": -747.0,
+      "change_pct": -1.988,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -12067,6 +12091,10 @@
         {
           "date": "2026-11-16",
           "value": 37578.0
+        },
+        {
+          "date": "2026-11-17",
+          "value": 36831.0
         }
       ]
     },
@@ -12078,10 +12106,10 @@
       "group": "fund",
       "currency": "JPY_10000",
       "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
-      "price": 44560.0,
-      "change": -191.0,
-      "change_pct": -0.427,
-      "as_of": "2026-11-16",
+      "price": 43607.0,
+      "change": -953.0,
+      "change_pct": -2.139,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -13143,6 +13171,10 @@
         {
           "date": "2026-11-16",
           "value": 44560.0
+        },
+        {
+          "date": "2026-11-17",
+          "value": 43607.0
         }
       ]
     },
@@ -13154,10 +13186,10 @@
       "group": "fund",
       "currency": "JPY_10000",
       "source_url": "https://apl.wealthadvisor.jp/webasp/sbi_am/pc/basic/sa_2024100101.html",
-      "price": 13677.0,
-      "change": -24.0,
-      "change_pct": -0.175,
-      "as_of": "2026-11-16",
+      "price": 13532.0,
+      "change": -145.0,
+      "change_pct": -1.06,
+      "as_of": "2026-11-17",
       "status": "ok",
       "history": [
         {
@@ -14219,6 +14251,10 @@
         {
           "date": "2026-11-16",
           "value": 13677.0
+        },
+        {
+          "date": "2026-11-17",
+          "value": 13532.0
         }
       ]
     },
@@ -14230,9 +14266,9 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 19816.64,
-      "change": 23.6,
-      "change_pct": 0.119,
+      "price": 19734.72,
+      "change": -58.32,
+      "change_pct": -0.295,
       "as_of": "2026-11-17",
       "status": "ok",
       "history": [
@@ -15346,7 +15382,7 @@
         },
         {
           "date": "2026-11-17",
-          "value": 19816.64
+          "value": 19734.72
         }
       ]
     }
