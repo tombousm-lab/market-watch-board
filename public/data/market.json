@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-21T11:29:53+00:00",
+  "generated_at": "2026-11-21T19:34:51+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
     "usd_jpy": 159.707,
@@ -1169,10 +1169,6 @@
       "status": "ok",
       "history": [
         {
-          "date": "2025-10-17",
-          "value": 5341.0
-        },
-        {
           "date": "2025-10-20",
           "value": 5413.0
         },
@@ -2248,10 +2244,6 @@
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 4897.0
-        },
         {
           "date": "2025-10-20",
           "value": 4875.0
@@ -3329,10 +3321,6 @@
       "status": "ok",
       "history": [
         {
-          "date": "2025-10-17",
-          "value": 4166.0
-        },
-        {
           "date": "2025-10-20",
           "value": 4302.0
         },
@@ -4408,10 +4396,6 @@
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 492.42001
-        },
         {
           "date": "2025-10-20",
           "value": 494.07999
@@ -5529,10 +5513,6 @@
       "status": "ok",
       "history": [
         {
-          "date": "2025-10-17",
-          "value": 295.07999
-        },
-        {
           "date": "2025-10-20",
           "value": 297.70001
         },
@@ -6648,10 +6628,6 @@
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 253.3
-        },
         {
           "date": "2025-10-20",
           "value": 256.54999
@@ -7769,10 +7745,6 @@
       "status": "ok",
       "history": [
         {
-          "date": "2025-10-17",
-          "value": 303.66
-        },
-        {
           "date": "2025-10-20",
           "value": 307.95001
         },
@@ -8888,10 +8860,6 @@
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 11.83
-        },
         {
           "date": "2025-10-20",
           "value": 13.14
@@ -10009,10 +9977,6 @@
       "status": "ok",
       "history": [
         {
-          "date": "2025-10-17",
-          "value": 6664.00977
-        },
-        {
           "date": "2025-10-20",
           "value": 6735.12988
         },
@@ -11121,17 +11085,13 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://www.am.mufg.jp/fund/253425.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
       "price": 35574.0,
       "change": -685.0,
       "change_pct": -1.889,
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 30808.0
-        },
         {
           "date": "2025-10-20",
           "value": 31007.0
@@ -12201,17 +12161,13 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
       "price": 42207.0,
       "change": -856.0,
       "change_pct": -1.988,
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 36333.0
-        },
         {
           "date": "2025-10-20",
           "value": 36724.0
@@ -13289,10 +13245,6 @@
       "status": "ok",
       "history": [
         {
-          "date": "2025-10-17",
-          "value": 11550.0
-        },
-        {
           "date": "2025-10-20",
           "value": 11573.0
         },
@@ -14368,10 +14320,6 @@
       "as_of": "2026-11-20",
       "status": "ok",
       "history": [
-        {
-          "date": "2025-10-17",
-          "value": 20335.37
-        },
         {
           "date": "2025-10-20",
           "value": 21149.83
