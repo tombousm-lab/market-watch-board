@@ -1,20 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-22T22:38:22+00:00",
+  "generated_at": "2026-11-23T03:51:29+00:00",
   "timezone": "Asia/Tokyo",
   "fx": {
-    "usd_jpy": 158.532,
-    "previous_usd_jpy": 159.707,
-    "change": -1.175,
-    "change_pct": -0.736,
-    "as_of": "2026-11-22",
-    "previous_as_of": "2026-11-20",
+    "usd_jpy": 158.95599,
+    "previous_usd_jpy": 158.532,
+    "change": 0.42399,
+    "change_pct": 0.267,
+    "as_of": "2026-11-23",
+    "previous_as_of": "2026-11-22",
     "status": "ok",
     "history": [
-      {
-        "date": "2025-10-24",
-        "value": 152.60201
-      },
       {
         "date": "2025-10-27",
         "value": 153.061
@@ -1150,6 +1146,10 @@
       {
         "date": "2026-11-22",
         "value": 158.532
+      },
+      {
+        "date": "2026-11-23",
+        "value": 158.95599
       }
     ]
   },
@@ -11085,7 +11085,7 @@
       "symbol": "0331418A",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://www.am.mufg.jp/fund/253425.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/0331418A/history",
       "price": 35574.0,
       "change": -685.0,
       "change_pct": -1.889,
@@ -12161,7 +12161,7 @@
       "symbol": "03311187",
       "group": "fund",
       "currency": "JPY_10000",
-      "source_url": "https://emaxis.am.mufg.jp/fund/253266.html",
+      "source_url": "https://finance.yahoo.co.jp/quote/03311187/history",
       "price": 42207.0,
       "change": -856.0,
       "change_pct": -1.988,
@@ -14314,10 +14314,10 @@
       "group": "metal",
       "currency": "JPY_GRAM",
       "source_url": "https://finance.yahoo.com/quote/GC%3DF/",
-      "price": 18050.52,
-      "change": -834.79,
-      "change_pct": -4.42,
-      "as_of": "2026-11-20",
+      "price": 18514.18,
+      "change": 463.66,
+      "change_pct": 2.569,
+      "as_of": "2026-11-22",
       "status": "ok",
       "history": [
         {
@@ -15439,6 +15439,10 @@
         {
           "date": "2026-11-20",
           "value": 18050.52
+        },
+        {
+          "date": "2026-11-22",
+          "value": 18514.18
         }
       ]
     }
